@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel value="Ingrese los datos del nuevo usuario: "/> 
+        <h:body styleClass="text-align:center">
+            <h:form>    
+                <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="nombre" value="Nombre: "/>
+                <p:inputText id="nombre" value="#{altaUsuariosView.nombre}"/>
+
+                <p:outputLabel for="password" value="Password: "/>
+                <p:inputText id="password" value="#{altaUsuariosView.password}"/>
+                
+                <p:outputLabel for="tipo" value="Tipo: "/>
+                <p:selectOneMenu id="tipo" value="#{altaUsuariosView.tipo}" converter="usuariotipoConverter"> 
+                    <f:selectItems value="#{altaUsuariosView.usuariotipos}"  var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
+                </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:commandButton id="alta" action="#{altaUsuariosView.crear}" value="Alta"></p:commandButton>
+            </h:form>    
+        </h:body>
+    </ui:define>
+</ui:composition>

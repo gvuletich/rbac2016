@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+    
+    <f:view contentType="text/html" id="fview">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RoleDemo</title>
+    <ui:debug />
+    <f:metadata>
+        <ui:insert name="metadata" />
+    </f:metadata>
+
+    <h:head>
+    <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+
+    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+        <p:layoutUnit position="north" size="68" id="north">
+            <h:form>
+                <p:commandButton action="#{loginView.logout}" value="salir" style="background-color: mediumpurple; size:20px; align-self:rigth;"/>
+            </h:form>
+            <!--ui:include src="header.xhtml" /-->
+        </p:layoutUnit>
+
+        <p:layoutUnit styleClass="layoutUnitLeft" position="west" id="west" resizable="false" header="Menu"  size="250">
+            <ui:include src="/menu.xhtml" />
+        </p:layoutUnit>
+
+        <p:layoutUnit styleClass="layoutUnitCenter" position="center">
+            <h:form id="mainForm">
+                <p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
+                <ui:insert name="content" />
+            </h:form>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="east" size="0" style="width:0px; display:none;" id="east">
+        </p:layoutUnit>
+
+        <p:layoutUnit position="south" resizable="true" id="south">
+            <!--ui:include src="footer.xhtml" /-->
+        </p:layoutUnit>
+    </p:layout>
+    
+    <ui:remove>
+    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" draggable="false" closable="false" resizable="false" visible="false" position="center" maximizable="false" minimizable="false" >
+        <p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
+    </p:dialog >
+    </ui:remove>
+    
+    </h:head>
+
+    <h:body onload="statusDialog.hide();">
+    </h:body>
+
+</f:view>
+</html>

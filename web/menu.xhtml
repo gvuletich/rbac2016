@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    >
+    <h:form>
+    <p:menu>
+    <p:submenu label="Cajas">
+        <p:menuitem value="Azul" outcome="/index.xhtml" style="background-color:  cornflowerblue" />
+        <p:menuitem value="Amarillo" outcome="/index.xhtml" style="background-color: khaki"/>
+        <p:menuitem value="Violeta" outcome="/index.xhtml" style="background-color: mediumpurple" />
+    </p:submenu>
+    <p:submenu label="Altas">
+        <p:menuitem value="Usuarios" outcome="/altas/alta_usuario.xhtml" style="background-color:  darkgray" />
+        <p:menuitem value="Objetos" outcome="/index.xhtml" style="background-color:  darkgray" />
+        <p:menuitem value="Permisos" outcome="/index.xhtml" style="background-color:  darkgray" />
+        <p:menuitem value="Roles" outcome="/index.xhtml" style="background-color:  darkgray" />
+    </p:submenu>    
+    </p:menu>
+    </h:form>    
+</ui:composition>

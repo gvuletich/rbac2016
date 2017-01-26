@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel value="Complete los datos de la nueva caja: "/> 
+        <h:body styleClass="text-align:center">
+            <h:form>    
+                <h:panelGrid columns="2" cellpadding="5">
+
+                <p:outputLabel for="msg" value="Mensaje: "/>
+                <p:inputText id="msg" value="#{altaCajasView.msg}"/>
+                
+                <p:outputLabel for="tipo" value="Tipo: "/>
+                <p:selectOneMenu id="tipo" value="#{altaCajasView.tipo}" converter="cajastipoConverter"> 
+                    <f:selectItems value="#{altaCajasView.cajatipos}"  var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
+                </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:commandButton id="crear" action="#{altaCajasView.crear}" value="Crear"></p:commandButton>
+            </h:form>    
+        </h:body>
+    </ui:define>
+</ui:composition>

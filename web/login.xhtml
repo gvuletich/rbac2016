@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+    <head>
+        <title>Bienvenido a RoleDemo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    
+    <h:body styleClass="text-align:center">
+        <h:form>    
+             
+                        <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel for="usuario" value="Usuario:"/>
+                        <p:inputText id="usuario" value="#{loginView.usuario}"/>
+
+                        <p:outputLabel for="pass" value="Contraseña:"/>
+                        <p:inputText id="pass" type="password" value="#{loginView.password}"/> 
+                        </h:panelGrid>
+            
+                        <p:commandButton id="login" action="#{loginView.login}" value="Acceder"></p:commandButton>
+
+        </h:form>    
+    </h:body>
+</html>
