@@ -13,16 +13,25 @@ and open the template in the editor.
     >
     <h:form>
     <p:menu>
-    <p:submenu label="Cajas">
-        <p:menuitem value="Azul" outcome="/index.xhtml" style="background-color:  cornflowerblue" />
-        <p:menuitem value="Amarillo" outcome="/index.xhtml" style="background-color: khaki"/>
-        <p:menuitem value="Violeta" outcome="/index.xhtml" style="background-color: mediumpurple" />
+    <p:submenu id="vw_cajas" label="Cajas">
+        <p:menuitem id="vw_cajas_azul" value="Azul" outcome="/cajas/azul.xhtml" style="background-color:  cornflowerblue" />
+        <p:menuitem id="vw_cajas_amarillo" value="Amarillo" outcome="/cajas/amarillo.xhtml" style="background-color: khaki"/>
+        <p:menuitem id="vw_cajas_violeta" value="Violeta" outcome="/cajas/violeta.xhtml" style="background-color: mediumpurple" />
     </p:submenu>
-    <p:submenu label="Altas">
-        <p:menuitem value="Usuarios" outcome="/altas/alta_usuario.xhtml" style="background-color:  darkgray" />
-        <p:menuitem value="Objetos" outcome="/index.xhtml" style="background-color:  darkgray" />
-        <p:menuitem value="Permisos" outcome="/index.xhtml" style="background-color:  darkgray" />
-        <p:menuitem value="Roles" outcome="/index.xhtml" style="background-color:  darkgray" />
+    <p:submenu id="vw_altas" label="Altas"
+                   rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas','ver')}">
+        <p:menuitem id="vw_altas_usuarios" value="Usuarios" outcome="/altas/usuarios.xhtml" style="background-color:  darkgray" 
+                    rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas_usuarios','ver')}"/>
+        <p:menuitem id="vw_altas_cajas" value="Cajas" outcome="/altas/cajas.xhtml" style="background-color:  darkgray"
+                    rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas_cajas','ver')}"/>
+        <p:menuitem id="vw_altas_objetos"  value="Objetos" outcome="/altas/objetos.xhtml" style="background-color:  darkgray" 
+                    rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas_objetos','ver')}"/>
+        <p:menuitem id="vw_altas_operaciones" value="Operaciones" outcome="/altas/operaciones.xhtml" style="background-color:  darkgray" 
+                    rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas_operaciones','ver')}"/>
+        <p:menuitem id="vw_altas_permisos" value="Permisos" outcome="/altas/permisos.xhtml" style="background-color:  darkgray" 
+                    rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas_permisos','ver')}"/>
+        <p:menuitem id="vw_altas_roles" value="Roles" outcome="/altas/roles.xhtml" style="background-color:  darkgray" 
+                    rendered="#{controlAcceso.permitidoUsuario(loginView.user,'vw_altas_roles','ver')}"/>
     </p:submenu>    
     </p:menu>
     </h:form>    
