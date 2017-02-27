@@ -10,11 +10,11 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Permisos.findAll", query = "SELECT p FROM Permisos p")
     , @NamedQuery(name = "Permisos.findByIdPermiso", query = "SELECT p FROM Permisos p WHERE p.idPermiso = :idPermiso")
-    , @NamedQuery(name = "Permisos.findByHablilitado", query = "SELECT p FROM Permisos p WHERE p.hablilitado = :hablilitado")})
+    , @NamedQuery(name = "Permisos.findByHabilitado", query = "SELECT p FROM Permisos p WHERE p.habilitado = :habilitado")})
 public class Permisos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,18 +45,15 @@ public class Permisos implements Serializable {
     private Integer idPermiso;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "hablilitado")
-    private boolean hablilitado;
-    @JoinTable(name = "permisos_roles", joinColumns = {
-        @JoinColumn(name = "idPermiso", referencedColumnName = "idPermiso")}, inverseJoinColumns = {
-        @JoinColumn(name = "idRol", referencedColumnName = "idRol")})
-    @ManyToMany
+    @Column(name = "habilitado")
+    private boolean habilitado;
+    @ManyToMany(mappedBy = "permisosCollection", fetch = FetchType.LAZY)
     private Collection<Roles> rolesCollection;
     @JoinColumn(name = "idOperacion", referencedColumnName = "idOperacion")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Operaciones idOperacion;
     @JoinColumn(name = "idObjeto", referencedColumnName = "idObjeto")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Objetos idObjeto;
 
     public Permisos() {
@@ -66,9 +63,9 @@ public class Permisos implements Serializable {
         this.idPermiso = idPermiso;
     }
 
-    public Permisos(Integer idPermiso, boolean hablilitado) {
+    public Permisos(Integer idPermiso, boolean habilitado) {
         this.idPermiso = idPermiso;
-        this.hablilitado = hablilitado;
+        this.habilitado = habilitado;
     }
 
     public Integer getIdPermiso() {
@@ -79,12 +76,12 @@ public class Permisos implements Serializable {
         this.idPermiso = idPermiso;
     }
 
-    public boolean getHablilitado() {
-        return hablilitado;
+    public boolean getHabilitado() {
+        return habilitado;
     }
 
-    public void setHablilitado(boolean hablilitado) {
-        this.hablilitado = hablilitado;
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 
     @XmlTransient

@@ -20,18 +20,25 @@ and open the template in the editor.
             <h:form>    
                 <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel for="nombre" value="Nombre: "/>
-                <p:inputText id="nombre" value="#{altaUsuariosView.nombre}"/>
+                <p:inputText id="nombre" value="#{altaUsuariosView.usuario.nombre}"/>
 
                 <p:outputLabel for="password" value="Password: "/>
-                <p:inputText id="password" value="#{altaUsuariosView.password}"/>
+                <p:inputText id="password" value="#{altaUsuariosView.usuario.password}"/>
                 
                 <p:outputLabel for="tipo" value="Tipo: "/>
-                <p:selectOneMenu id="tipo" value="#{altaUsuariosView.tipo}" converter="usuariotipoConverter"> 
+                <p:selectOneMenu id="tipo" value="#{altaUsuariosView.usuario.idTipo}" converter="usuariotipoConverter"> 
                     <f:selectItems value="#{altaUsuariosView.usuariotipos}"  var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
                 </p:selectOneMenu>
+                
+                
+                <p:outputLabel for="rol" value="Roles: "/> 
+                <p:selectManyCheckbox id="rol" layout="grid" columns="1" value="#{altaUsuariosView.usuario.rolesCollection}" converter="rolesConverter" > 
+                    <f:selectItems value="#{altaUsuariosView.roles}"  var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
+                </p:selectManyCheckbox>
                 </h:panelGrid>
 
-                <p:commandButton id="alta" action="#{altaUsuariosView.crear}" value="Alta"></p:commandButton>
+                <p:commandButton id="alta" action="#{altaUsuariosView.crear}" value="Guardar"></p:commandButton>
+                <p:commandButton id="baja" action="#{altaUsuariosView.eliminar}" style="background-color: red" value="Eliminar"></p:commandButton>
             </h:form>    
         </h:body>
     </ui:define>

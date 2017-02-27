@@ -6,9 +6,11 @@
 package facades;
 
 import entidades.Usuarios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -45,6 +47,15 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         if(nombre!=null)
             qry.setParameter("nombre",nombre);
         result = qry.getSingleResult();
+        return result;
+    }
+    
+    public List<Usuarios> findByHabilitado(Boolean habilitado){
+        List<Usuarios>  result=null;
+        Query qry = em.createNamedQuery("Usuarios.findByHabilitado", Usuarios.class);
+        if(habilitado!=null)
+            qry.setParameter("habilitado",habilitado);
+        result=qry.getResultList();
         return result;
     }
     

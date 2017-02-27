@@ -15,21 +15,29 @@ and open the template in the editor.
     <ui:define name="metadata">
     </ui:define>
     <ui:define name="content">
-        <p:outputLabel value="Complete los datos de la nueva caja: "/> 
+        <p:outputLabel value="Hola, complete los datos de la caja: "/> 
         <h:body styleClass="text-align:center">
             <h:form>    
                 <h:panelGrid columns="2" cellpadding="5">
 
                 <p:outputLabel for="msg" value="Mensaje: "/>
-                <p:inputText id="msg" value="#{altaCajasView.msg}"/>
+                <p:inputText id="msg" value="#{altaCajasView.caja.msg}"/>
                 
                 <p:outputLabel for="tipo" value="Tipo: "/>
-                <p:selectOneMenu id="tipo" value="#{altaCajasView.tipo}" converter="cajastipoConverter"> 
+                <p:selectOneMenu id="tipo" value="#{altaCajasView.caja.idTipo}" converter="cajastipoConverter"> 
                     <f:selectItems value="#{altaCajasView.cajatipos}"  var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
                 </p:selectOneMenu>
-                </h:panelGrid>
+                
+                <ui:remove>
+                <p:outputLabel for="propietario" value="Propietario: "/>
+                <p:selectOneMenu id="propietario" value="#{altaCajasView.caja.idUsuario}" converter="usuariosConverter"> 
+                    <f:selectItems value="#{altaCajasView.usuarios}"  var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
+                </p:selectOneMenu>
+                </ui:remove>
 
-                <p:commandButton id="crear" action="#{altaCajasView.crear}" value="Crear"></p:commandButton>
+                <p:commandButton id="crear" action="#{altaCajasView.crear}" value="Guardar"></p:commandButton>
+                <p:commandButton id="baja" action="#{altaCajasView.eliminar}" style="background-color: red" value="Eliminar"></p:commandButton>
+                </h:panelGrid>
             </h:form>    
         </h:body>
     </ui:define>

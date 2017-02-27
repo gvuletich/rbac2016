@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel value="Hola #{loginView.usuario}, complete los datos del Rol "/> 
+        <h:body styleClass="text-align:center">
+            <h:form>    
+                <h:panelGrid columns="2" cellpadding="5">
+
+                <p:outputLabel for="msg" value="Nombre:  "/>
+                <p:inputText id="msg" value="#{altaRolesView.rol.nombre}"/>
+                
+                <p:outputLabel for="basic" value="Permisos:  "/>
+                <p:selectManyCheckbox id="basic" value="#{altaRolesView.rol.permisosCollection}" converter="permisosConverter">
+                    <f:selectItems value="#{altaRolesView.permisos}" var="perm" itemLabel="#{perm.idOperacion.nombre} &amp; #{perm.idObjeto.nombre}" itemValue="#{perm}" />
+                </p:selectManyCheckbox>
+                
+                
+                </h:panelGrid>
+
+                <p:commandButton id="crear" action="#{altaRolesView.crear}" value="Guardar"></p:commandButton>
+                <p:commandButton id="baja" action="#{altaRolesView.eliminar}" style="background-color: red" value="Eliminar"></p:commandButton>
+            </h:form>    
+        </h:body>
+    </ui:define>
+</ui:composition>

@@ -5,8 +5,7 @@
  */
 package facades;
 
-import entidades.Cajas;
-import entidades.Usuarios;
+import entidades.Objetos;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,7 +18,7 @@ import javax.persistence.TypedQuery;
  * @author german
  */
 @Stateless
-public class CajasFacade extends AbstractFacade<Cajas> {
+public class ObjetosFacade extends AbstractFacade<Objetos> {
 
     @PersistenceContext(unitName = "roledemoPU")
     private EntityManager em;
@@ -29,35 +28,34 @@ public class CajasFacade extends AbstractFacade<Cajas> {
         return em;
     }
 
-    public CajasFacade() {
-        super(Cajas.class);
+    public ObjetosFacade() {
+        super(Objetos.class);
     }
     
-    public Cajas findById(Integer id){
-        Cajas result=null;
-        TypedQuery<Cajas> qry = em.createNamedQuery("Cajas.findByIdCaja", Cajas.class);
+    public Objetos findById(Integer id){
+        Objetos result=null;
+        TypedQuery<Objetos> qry = em.createNamedQuery("Objetos.findByIdObjeto", Objetos.class);
         if(id!=null)
-            qry.setParameter("idCaja",id);
+            qry.setParameter("idObjeto",id);
         result=qry.getSingleResult();
         return result;
     }
     
-    public List<Cajas> findByUsuario(Usuarios idUsuario){
-        List<Cajas> result=null;
-        TypedQuery<Cajas> qry = em.createNamedQuery("Cajas.findByIdUsuario", Cajas.class);
-        if(idUsuario!=null)
-            qry.setParameter("idUsuario",idUsuario);
-        result=qry.getResultList();
+    public Objetos findByNombre(String nombre){
+        Objetos result=null;
+        TypedQuery<Objetos> qry = em.createNamedQuery("Objetos.findByNombre", Objetos.class);
+        if(nombre!=null)
+            qry.setParameter("nombre",nombre);
+        result = qry.getSingleResult();
         return result;
     }
     
-     public List<Cajas> findByHabilitado(Boolean habilitado){
-        List<Cajas>  result=null;
-        Query qry = em.createNamedQuery("Cajas.findByHabilitado", Cajas.class);
+    public List<Objetos> findByHabilitado(Boolean habilitado){
+        List<Objetos>  result=null;
+        Query qry = em.createNamedQuery("Objetos.findByHabilitado", Objetos.class);
         if(habilitado!=null)
             qry.setParameter("habilitado",habilitado);
         result=qry.getResultList();
         return result;
     }
-    
 }

@@ -10,9 +10,12 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -51,9 +54,12 @@ public class Roles implements Serializable {
     @NotNull
     @Column(name = "habilitado")
     private boolean habilitado;
-    @ManyToMany(mappedBy = "rolesCollection")
+    @JoinTable(name = "permisos_roles", joinColumns = {
+        @JoinColumn(name = "idRol", referencedColumnName = "idRol")}, inverseJoinColumns = {
+        @JoinColumn(name = "idPermiso", referencedColumnName = "idPermiso")})
+    @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Permisos> permisosCollection;
-    @ManyToMany(mappedBy = "rolesCollection")
+    @ManyToMany(mappedBy = "rolesCollection", fetch = FetchType.LAZY)
     private Collection<Usuarios> usuariosCollection;
 
     public Roles() {

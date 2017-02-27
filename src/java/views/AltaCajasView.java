@@ -7,49 +7,129 @@ package views;
 
 import entidades.Cajas;
 import entidades.Cajastipo;
+import entidades.Usuarios;
 import facades.CajasFacade;
 import facades.CajastipoFacade;
+import facades.UsuariosFacade;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.bean.ViewScoped;
+import javax.transaction.UserTransaction;
 
 /**
  *
  * @author german
  */
-@Named(value = "altaCajasView")
+@ManagedBean(name = "altaCajasView")
 @ViewScoped
 public class AltaCajasView implements Serializable {
     
     @EJB
     private CajasFacade cajasFacade;   
-    private Cajas caja;
+    private Cajas caja=null;
     
     @EJB
     private CajastipoFacade cajastipoFacade;   
-    private List<Cajastipo> cajastipos;
+    private List<Cajastipo> cajatipos;
     
-    private Cajastipo tipo;
-    private String msg;
+    @EJB
+    private UsuariosFacade usuariosFacade;
     
-//    @ManagedProperty(value = "#{loginView}")
-//    private loginView loginview;  
+    @ManagedProperty(value="#{loginView}")
+    private loginView loginv;
+
+    public loginView getLoginv() {
+        return loginv;
+    }
+
+    public void setLoginv(loginView loginv) {
+        this.loginv = loginv;
+    }
     
-    /**
-     * Creates a new instance of AltaCajasView
-     */
-//    public AltaCajasView() {
-//        
-//    }
-    public void crear(){
+    
+    public List<Cajastipo> getCajatipos() {
+        if(cajatipos==null)
+            cajatipos = cajastipoFacade.getAll();
+        return cajatipos;
+    }
+
+    public void setCajatipos(List<Cajastipo> cajatipos) {
+        this.cajatipos = cajatipos;
+    }
+        
+    private List<Usuarios> usuarios;
+
+    
+    @Resource
+    UserTransaction tx;
+    
+    
+    private void reset(){    
+        caja=null;
+    }
+    
+    @PostConstruct
+    public void init(){
+        if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){
+            caja = cajasFacade.findById(Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")));
+            System.out.println("ATENCIONNNNNN: en Init leo loginUsuario:"+loginv.getUsuario()+" con idUsuario: "+usuariosFacade.findByNombre(loginv.getUsuario()).getIdUsuario());
+            if(caja!=null){
+                preparaEditar();
+            }else
+                ;//redirect to somewhere
+            }
+        else{
+            preparaCrear();
+        }
+    }
+
+    public void nuevoCaja(){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("alta_cajas.xhtml?faces-redirect=true");                    
+        } catch (IOException ex)
+        {}
+        return;
+    }
+    
+    public void preparaCrear(){
         caja = new Cajas();
-        caja.setIdTipo(tipo);
-        caja.setMsg(msg);
+        //crear();
+    }
+    
+    public void preparaEditar(){
+        ;// falta implementar
+    }
+    
+    public String crear(){
+
+//        caja.setIdTipo(tipo);
+//        caja.setNombre(nombre);
+//        caja.setPassword(password);
         caja.setHabilitado(true);
-        cajasFacade.edit(caja);
+        caja.setIdUsuario(usuariosFacade.findByNombre(loginv.getUsuario()));
+        try{
+            cajasFacade.edit(caja);
+        
+        } catch(Exception e){
+            
+            System.out.println(e);
+        }
+        return "/faces/altas/cajas.xhtml?faces-redirect=true";
+    }
+    
+    public String eliminar(){
+        cajasFacade.remove(caja);
+        //caja.setHabilitado(false);
+        //cajasFacade.edit(caja);
+        reset();
+        return "/faces/altas/cajas.xhtml?faces-redirect=true";
     }
     
     public Cajas getCaja() {
@@ -59,33 +139,17 @@ public class AltaCajasView implements Serializable {
     public void setCaja(Cajas caja) {
         this.caja = caja;
     }
-
-    public Cajastipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Cajastipo tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
     
-    public List<Cajastipo> getCajastipos() {
-        if (cajastipos==null)
-            cajastipos=cajastipoFacade.getAll();
-            
-        return cajastipos;
+    public List<Usuarios> getUsuarios() {
+        if(usuarios==null)
+            usuarios = usuariosFacade.findAll();
+        return usuarios;
     }
 
-    public void setCajastipos(List<Cajastipo> cajastipos) {
-        this.cajastipos = cajastipos;
+    public void setUsuarios(List<Usuarios> usuarios) {
+        this.usuarios = usuarios;
     }
     
+
+   
 }

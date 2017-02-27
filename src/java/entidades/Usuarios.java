@@ -8,8 +8,10 @@ package entidades;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -63,11 +66,13 @@ public class Usuarios implements Serializable {
     @JoinTable(name = "usuarios_roles", joinColumns = {
         @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")}, inverseJoinColumns = {
         @JoinColumn(name = "idRol", referencedColumnName = "idRol")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Roles> rolesCollection;
     @JoinColumn(name = "idTipo", referencedColumnName = "idTipo")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuariotipo idTipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    private Collection<Cajas> cajasCollection;
 
     public Usuarios() {
     }
@@ -130,6 +135,15 @@ public class Usuarios implements Serializable {
 
     public void setIdTipo(Usuariotipo idTipo) {
         this.idTipo = idTipo;
+    }
+
+    @XmlTransient
+    public Collection<Cajas> getCajasCollection() {
+        return cajasCollection;
+    }
+
+    public void setCajasCollection(Collection<Cajas> cajasCollection) {
+        this.cajasCollection = cajasCollection;
     }
 
     @Override

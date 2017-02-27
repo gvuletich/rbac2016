@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel value="Lista de usuarios: "/> 
+        <h:body styleClass="text-align:center">
+            <h:form id="form">
+            <p:dataTable var="usr" value="#{usuariosView.usuarios}" paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15"  rowKey="#{usr.idUsuario}" selectionMode="single" selection="#{usuariosView.usuario}" id="usrTable" lazy="true">
+                <!--p:ajax event="rowSelect" listener="#{usuariosView.onRowSelect}" /-->
+                <p:column headerText="Id" sortBy="#{usr.idUsuario}" filterBy="#{usr.idUsuario}">
+                    <h:link value="#{usr.idUsuario}" outcome="alta_usuario.xhtml?faces-redirect=true">
+                        <f:param name="id" value="#{usr.idUsuario}"/>
+                    </h:link>
+                </p:column>
+                <p:column headerText="Nombre" sortBy="#{usr.nombre}" filterBy="#{usr.nombre}">
+                    <h:link value="#{usr.nombre}" outcome="alta_usuario.xhtml?faces-redirect=true">
+                        <f:param name="id" value="#{usr.idUsuario}"/>
+                    </h:link>
+                    
+                </p:column>
+            </p:dataTable>
+                <p:commandButton id="Nuevo" actionListener="#{altaUsuariosView.nuevoUsuario}" value="Alta"></p:commandButton>
+            </h:form>    
+        </h:body>
+    </ui:define>
+</ui:composition>

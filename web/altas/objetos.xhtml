@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel value="Lista de objetos "/> 
+        <h:body styleClass="text-align:center">
+            <h:form id="form">
+            <p:dataTable var="objeto" value="#{objetosView.objetos}" paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15"  rowKey="#{objeto.idObjeto}" selectionMode="single" selection="#{objetosView.objeto}" id="objetoTable" lazy="true">
+                <p:column headerText="Id" sortBy="#{objeto.idObjeto}" filterBy="#{objeto.idObjeto}">
+                    <h:link value="#{objeto.idObjeto}" outcome="alta_objetos.xhtml?faces-redirect=true">
+                        <f:param name="id" value="#{objeto.idObjeto}"/>
+                    </h:link>
+                </p:column>
+                <p:column headerText="Nombre" sortBy="#{objeto.nombre}" filterBy="#{objeto.nombre}">
+                    <h:link value="#{objeto.nombre}" outcome="alta_objetos.xhtml?faces-redirect=true">
+                        <f:param name="id" value="#{objeto.idObjeto}"/>
+                    </h:link>
+                    
+                </p:column>
+            </p:dataTable>
+                <p:commandButton id="Nuevo" actionListener="#{altaObjetosView.nuevoObjeto}" value="Alta"></p:commandButton>
+            </h:form>    
+        </h:body>
+    </ui:define>
+</ui:composition>

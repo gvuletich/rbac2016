@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        <p:outputLabel value="Hola, complete los datos del nuevo Operacion "/> 
+        <h:body styleClass="text-align:center">
+            <h:form>    
+                <h:panelGrid columns="2" cellpadding="5">
+
+                <p:outputLabel for="nombre" value="Nombre:  "/>
+                <p:inputText id="nombre" value="#{altaOperacionesView.operacion.nombre}"/>
+
+                </h:panelGrid>
+
+                <p:commandButton id="crear" action="#{altaOperacionesView.crear}" value="Guardar"></p:commandButton>
+                <p:commandButton id="baja" action="#{altaOperacionesView.eliminar}" style="background-color: red" value="Eliminar"></p:commandButton>
+            </h:form>    
+        </h:body>
+    </ui:define>
+</ui:composition>

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Cajas.findAll", query = "SELECT c FROM Cajas c")
     , @NamedQuery(name = "Cajas.findByIdCaja", query = "SELECT c FROM Cajas c WHERE c.idCaja = :idCaja")
-    , @NamedQuery(name = "Cajas.findByIdUsuario", query = "SELECT c FROM Cajas c WHERE c.idUsuario = :idUsuario")
+    , @NamedQuery(name = "Cajas.findByIdUsuario", query = "SELECT c FROM Cajas c WHERE c.idUsuario = :idUsuario")    
     , @NamedQuery(name = "Cajas.findByMsg", query = "SELECT c FROM Cajas c WHERE c.msg = :msg")
     , @NamedQuery(name = "Cajas.findByHabilitado", query = "SELECT c FROM Cajas c WHERE c.habilitado = :habilitado")})
 public class Cajas implements Serializable {
@@ -42,10 +43,6 @@ public class Cajas implements Serializable {
     @Basic(optional = false)
     @Column(name = "idCaja")
     private Integer idCaja;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idUsuario")
-    private int idUsuario;
     @Size(max = 200)
     @Column(name = "msg")
     private String msg;
@@ -54,8 +51,11 @@ public class Cajas implements Serializable {
     @Column(name = "habilitado")
     private boolean habilitado;
     @JoinColumn(name = "idTipo", referencedColumnName = "idTipo")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cajastipo idTipo;
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Usuarios idUsuario;
 
     public Cajas() {
     }
@@ -64,9 +64,8 @@ public class Cajas implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public Cajas(Integer idCaja, int idUsuario, boolean habilitado) {
+    public Cajas(Integer idCaja, boolean habilitado) {
         this.idCaja = idCaja;
-        this.idUsuario = idUsuario;
         this.habilitado = habilitado;
     }
 
@@ -76,14 +75,6 @@ public class Cajas implements Serializable {
 
     public void setIdCaja(Integer idCaja) {
         this.idCaja = idCaja;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public String getMsg() {
@@ -108,6 +99,14 @@ public class Cajas implements Serializable {
 
     public void setIdTipo(Cajastipo idTipo) {
         this.idTipo = idTipo;
+    }
+
+    public Usuarios getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuarios idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override

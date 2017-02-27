@@ -7,10 +7,10 @@ package views;
 
 import entidades.Usuarios;
 import facades.UsuariosFacade;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
@@ -19,8 +19,10 @@ import org.primefaces.context.RequestContext;
  *
  * @author german
  */
-@Named(value = "loginView")
+//@Named(value = "loginView")
+@ManagedBean(name = "loginView")
 @SessionScoped
+
 public class loginView implements Serializable {
 
     /**
@@ -34,6 +36,7 @@ public class loginView implements Serializable {
     
     @EJB 
     private UsuariosFacade usuariosFacade;
+    private Usuarios user;
 
     public String getUsuario() {
         return usuario;
@@ -59,7 +62,6 @@ public class loginView implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         //FacesMessage message = null;
         
-        Usuarios user=null;
         if (getUsuario()!=null)
              user = usuariosFacade.findByNombre(getUsuario());
         if(getUsuario() != null && getUsuario().equals(user.getNombre()) && getPassword() != null && getPassword().equals(user.getPassword())) {
@@ -73,12 +75,20 @@ public class loginView implements Serializable {
         }
         return "login.xhtml?faces-redirect=true";
     }
+
+    public Usuarios getUser() {
+        return user;
+    }
+
+    public void setUser(Usuarios user) {
+        this.user = user;
+    }
     
     public String logout(){
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         session.invalidate();
         loggedIn = false;
-        return "login.xhtml?faces-redirect=true";
+        return "/faces/login.xhtml?faces-redirect=true";
     }
     
 }

@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Operaciones implements Serializable {
     @NotNull
     @Column(name = "habilitado")
     private boolean habilitado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOperacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOperacion", fetch = FetchType.LAZY)
     private Collection<Permisos> permisosCollection;
 
     public Operaciones() {

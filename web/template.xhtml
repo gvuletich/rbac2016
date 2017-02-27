@@ -26,8 +26,9 @@ and open the template in the editor.
     <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
         <p:layoutUnit position="north" size="68" id="north">
             <h:form>
-                <p:commandButton action="#{loginView.logout}" value="salir" style="background-color: mediumpurple; size:20px; align-self:rigth;"/>
+                <p:commandButton action="#{loginView.logout}" value="salir" style="background-color: teal; size:20px; align-self:rigth;"/>
             </h:form>
+            <p:outputLabel value="Hola, #{loginView.user.nombre}"/>
             <!--ui:include src="header.xhtml" /-->
         </p:layoutUnit>
 

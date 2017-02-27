@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/template.xhtml">
+    
+        
+    <ui:define name="metadata">
+    </ui:define>
+    <ui:define name="content">
+        
+            <p:dataGrid rows="12" columns="8" var="ca" value="#{violetaView.cajas}" styleClass="ui-datagrid-no-border">
+                <p:commandButton value="#{ca.idUsuario.nombre}" style="background-color:mediumpurple" rendered="#{ca.idTipo.idTipo==4}"/>
+            </p:dataGrid>
+             
+    </ui:define>
+</ui:composition>
